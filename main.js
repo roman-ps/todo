@@ -8,6 +8,7 @@ input.addEventListener("dblclick", function(event) {
   event.preventDefault;
   main.appendChild(newElement);
   newElement.value = input.value;
+  newElement.setAttribute("readonly", "readonly");
 //  console.log(textIn);
 });
 
@@ -15,5 +16,6 @@ input.addEventListener("keydown", function(event) {
   if (event.keyCode === 13) {
       main.appendChild(newElement);
       newElement.value = input.value;
+      newElement.setAttribute("readonly", "readonly");
       }
 });
