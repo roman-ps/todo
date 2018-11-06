@@ -1,18 +1,19 @@
-var newElement = document.createElement('p');
-//var mesto = document.body;
+var newElement = document.createElement('input');
 var input = document.querySelector(".input");
+var main = document.querySelector(".main");
 
-newElement.className = "new";
-newElement.innerHTML = "Ура получилось!";
-//document.body.appendChild(div1);
+newElement.className = "input input__new";
 
 input.addEventListener("dblclick", function(event) {
   event.preventDefault;
-  document.body.appendChild(newElement);
+  main.appendChild(newElement);
+  newElement.value = input.value;
+//  console.log(textIn);
 });
 
 input.addEventListener("keydown", function(event) {
   if (event.keyCode === 13) {
-      document.body.appendChild(newElement);
+      main.appendChild(newElement);
+      newElement.value = input.value;
       }
-})
+});
