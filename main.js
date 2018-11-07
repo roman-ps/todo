@@ -6,16 +6,19 @@ newElement.className = "input input__new";
 
 input.addEventListener("dblclick", function(event) {
   event.preventDefault;
+  if (input.value != '') {
   main.appendChild(newElement);
   newElement.value = input.value;
   newElement.setAttribute("readonly", "readonly");
-//  console.log(textIn);
+  }
 });
 
 input.addEventListener("keydown", function(event) {
   if (event.keyCode === 13) {
+    if (input.value != '') {
       main.appendChild(newElement);
       newElement.value = input.value;
       newElement.setAttribute("readonly", "readonly");
-      }
+    }
+  }
 });
