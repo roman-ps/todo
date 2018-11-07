@@ -7,9 +7,9 @@ newElement.className = "input input__new";
 input.addEventListener("dblclick", function(event) {
   event.preventDefault;
   if (input.value != '') {
-  main.appendChild(newElement);
-  newElement.value = input.value;
-  newElement.setAttribute("readonly", "readonly");
+    main.appendChild(newElement);
+    newElement.value = input.value;
+    newElement.setAttribute("readonly", "readonly");
   }
 });
 
