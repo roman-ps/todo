@@ -1,32 +1,33 @@
-const keyEnter = 13;
-const keyESC = 27;
-var newElement = document.createElement('input');
-newElement.className = "input input__new";
-var input = document.querySelector(".input");
-var main = document.querySelector(".main");
-var inputNew = document.querySelector(".input input__new");
+const CODE_ENTER = 13;
+const CODE_ESC = 27;
+var newElement = document.createElement('div');
+var input = document.querySelector(".add");
+var active = document.querySelector(".active");
+var addNew = document.querySelector(".add-new");
+var cloneInput = input.cloneNode(true);
+newElement.className = "task";
 
 input.addEventListener("dblclick", function(event) {
   event.preventDefault;
   if (input.value != '') {
-    main.appendChild(newElement);
-    newElement.value = input.value;
-    newElement.setAttribute("", "");
+    active.appendChild(newElement);
+    newElement.innerHTML = input.value;
+    active.insertBefore(newElement, active.lastChild);
   }
 });
 
 input.addEventListener("keydown", function(event) {
-  if (event.keyCode === keyEnter) {
+  if (event.keyCode === CODE_ENTER) {
     if (input.value != '') {
-      main.appendChild(newElement);
-      newElement.value = input.value;
-      newElement.setAttribute("", "");
+      active.appendChild(newElement);
+      newElement.innerHTML = input.value;
+      active.insertBefore(newElement, active.lastChild);
     }
   }
 });
 
 inputNew.addEventListener("keydown", function(event) {
-  if (event.keyCode === keyESC) {
-    main.removeChild(inputNew);
+  if (event.keyCode === CODE_ESC) {
+    active.removeChild(newElement);
   }
 })
