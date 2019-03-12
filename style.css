@@ -9,21 +9,30 @@ body {
 
 .title {
   font-size: 42px;
-  text-transform: uppercase;
   color: dodgerblue;
   text-align: center;
 }
 
 .main {
-  margin: 20px 0;
+  margin-bottom: 20px;
+  padding: 20px 0;
   text-align: center;
+  border: 1px dashed black;
 }
 
-.input {
-  width: 60%;
-  padding: 8px 20px;
+.tasks {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+  font-size: 18px;
+}
+
+.add {
+  box-sizing: border-box;
+  width: 50%;
+  padding: 10px 20px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: none;
 }
 
 .input__new {
