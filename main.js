@@ -5,7 +5,7 @@ var active = document.querySelector(".active");
 var addNew = document.querySelector(".add-new");
 var cloneInput = input.cloneNode(true);
 
-//добавление элемента
+// добавление элемента
 function addsItem(){
   event.preventDefault;
   var newElement = document.createElement('div');
@@ -14,15 +14,18 @@ function addsItem(){
     active.appendChild(newElement);
     newElement.innerHTML = input.value;
   }
+  input.value = '';
 }
 
+// удаление элемента
 function deleteItem() {
   event.preventDefault();
   var task = document.querySelector(".task");
   task.remove();
+  input.removeEventListener();
 }
 
-//добавление и удаление обработчика
+// обработчик
 input.addEventListener("dblclick", addsItem);
 active.addEventListener("click", deleteItem);
 
@@ -37,6 +40,7 @@ input.addEventListener("keydown", function(event) {
       newElement.innerHTML = input.value;
       active.insertBefore(newElement, active.lastChild);
     }
+    input.value = '';
   }
 });
 
