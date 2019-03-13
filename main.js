@@ -1,24 +1,31 @@
-const CODE_ENTER = 13;
-const CODE_ESC = 27;
-var newElement = document.createElement('div');
+const KEYCODE_ENTER = 13;
+const KEYCODE_ESC = 27;
 var input = document.querySelector(".add");
 var active = document.querySelector(".active");
 var addNew = document.querySelector(".add-new");
 var cloneInput = input.cloneNode(true);
-newElement.className = "task";
 
-input.addEventListener("dblclick", function(event) {
+//добавление элемента
+function addsItem(){
   event.preventDefault;
+  var newElement = document.createElement('div');
+  newElement.className = "task";
   if (input.value != '') {
     active.appendChild(newElement);
     newElement.innerHTML = input.value;
-    active.insertBefore(newElement, active.lastChild);
   }
-});
+}
+
+//добавление и удаление обработчика
+input.addEventListener("dblclick", addsItem);
+input.removeEventListener("dbclick", addsItem);
 
 input.addEventListener("keydown", function(event) {
-  if (event.keyCode === CODE_ENTER) {
+  event.preventDefault;
+  if (event.keyCode === KEYCODE_ENTER) {
     if (input.value != '') {
+      var newElement = document.createElement('div');
+      newElement.className = "task";
       active.appendChild(newElement);
       newElement.innerHTML = input.value;
       active.insertBefore(newElement, active.lastChild);
@@ -27,7 +34,7 @@ input.addEventListener("keydown", function(event) {
 });
 
 inputNew.addEventListener("keydown", function(event) {
-  if (event.keyCode === CODE_ESC) {
+  if (event.keyCode === KEYCODE_ESC) {
     active.removeChild(newElement);
   }
 })
