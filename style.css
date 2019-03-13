@@ -27,16 +27,29 @@ body {
   font-size: 18px;
 }
 
+.put {
+  margin-bottom: 20px;
+}
+
 .add {
   box-sizing: border-box;
-  width: 50%;
+  width: 300px;
   padding: 10px 20px;
   font-size: 16px;
   border: none;
 }
 
-.input__new {
-  background: #ffffff;
+.active {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.task {
+  margin-bottom: 10px;
+  padding: 8px;
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  text-align: left;
 }
 
 .footer {
