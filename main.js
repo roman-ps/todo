@@ -16,9 +16,16 @@ function addsItem(){
   }
 }
 
+function deleteItem() {
+  event.preventDefault();
+  var task = document.querySelector(".task");
+  task.remove();
+}
+
 //добавление и удаление обработчика
 input.addEventListener("dblclick", addsItem);
-input.removeEventListener("dbclick", addsItem);
+active.addEventListener("click", deleteItem);
+
 
 input.addEventListener("keydown", function(event) {
   event.preventDefault;
