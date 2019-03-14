@@ -38,9 +38,3 @@ input.addEventListener("keydown", function(event) {
     input.value = '';
   }
 });
-
-inputNew.addEventListener("keydown", function(event) {
-  if (event.keyCode === KEYCODE_ESC) {
-    active.removeChild(newElement);
-  }
-})
