@@ -1,5 +1,4 @@
 const KEYCODE_ENTER = 13;
-const KEYCODE_ESC = 27;
 var input = document.querySelector(".add");
 var active = document.querySelector(".active");
 
@@ -8,6 +7,7 @@ function addsItem(){
   event.preventDefault;
   var newElement = document.createElement('div');
   newElement.className = "task";
+  newElement.addEventListener("click", deleteItem);
   if (input.value != '') {
     active.appendChild(newElement);
     newElement.innerHTML = input.value;
@@ -16,15 +16,13 @@ function addsItem(){
 }
 
 // удаление элемента
-function deleteItem(event) {
-  event.preventDefault();
-  var target = event.target;
+function deleteItem(evt) {
+  evt.preventDefault();
+  var target = evt.target;
   target.remove();
 }
 
-// обработчик
 input.addEventListener("dblclick", addsItem);
-active.addEventListener("click", deleteItem);
 
 input.addEventListener("keydown", function(event) {
   event.preventDefault;
@@ -32,9 +30,11 @@ input.addEventListener("keydown", function(event) {
     if (input.value != '') {
       var newElement = document.createElement('div');
       newElement.className = "task";
+      newElement.addEventListener("click", deleteItem);
       active.appendChild(newElement);
       newElement.innerHTML = input.value;
     }
+    console.log(newElement);
     input.value = '';
   }
 });
