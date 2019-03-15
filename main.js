@@ -3,12 +3,12 @@ var input = document.querySelector(".add");
 var active = document.querySelector(".active");
 
 // добавление элемента
-function addsItem(){
-  event.preventDefault;
-  var newElement = document.createElement('div');
-  newElement.className = "task";
-  newElement.addEventListener("click", deleteItem);
+function addsItem(evt){
+  evt.preventDefault;
   if (input.value != '') {
+    var newElement = document.createElement('div');
+    newElement.className = "task";
+    newElement.addEventListener("click", deleteItem);
     active.appendChild(newElement);
     newElement.innerHTML = input.value;
   }
@@ -20,6 +20,8 @@ function deleteItem(evt) {
   evt.preventDefault();
   var target = evt.target;
   target.remove();
+  console.log(target);
+  target.removeEventListener("click", deleteItem);
 }
 
 input.addEventListener("dblclick", addsItem);
