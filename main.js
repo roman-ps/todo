@@ -1,6 +1,8 @@
 const KEYCODE_ENTER = 13;
 var input = document.querySelector(".add");
 var active = document.querySelector(".active");
+var tasksAll = document.querySelector(".tasks__all span");
+var tasksActive = document.querySelector(".tasks__active span");
 
 function createElem() {
   if (input.value != '') {
@@ -9,6 +11,7 @@ function createElem() {
     newElement.addEventListener("click", deleteItem);
     active.appendChild(newElement);
     newElement.innerHTML = input.value;
+    tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
   }
   input.value = '';
 }
@@ -33,6 +36,7 @@ function deleteItem(evt) {
   var target = evt.target;
   target.remove();
   target.removeEventListener("click", deleteItem);
+  tasksAll.innerHTML = parseInt(tasksAll.innerHTML) - 1;
 }
 
 input.addEventListener("dblclick", addsItemByClick);
