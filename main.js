@@ -1,16 +1,21 @@
 const KEYCODE_ENTER = 13;
+var tmpl = document.querySelector("#tmpl");
+var task = tmpl.content.querySelector(".task");
+var taskText = tmpl.content.querySelector(".task__main");
 var input = document.querySelector(".add");
 var active = document.querySelector(".active");
 var tasksAll = document.querySelector(".tasks__all span");
 var tasksActive = document.querySelector(".tasks__active span");
 
+// создание нового элемента
 function createElem() {
   if (input.value != '') {
-    var newElement = document.createElement('div');
-    newElement.className = "task";
+    var newElement = task.cloneNode(true);
+    console.log(task);
+    console.log(newElement);
     newElement.addEventListener("click", deleteItem);
     active.appendChild(newElement);
-    newElement.innerHTML = input.value;
+    taskText.innerHTML = input.value;
     tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
   }
   input.value = '';
@@ -33,10 +38,11 @@ function addsItemByBtn(evt){
 // удаление элемента
 function deleteItem(evt) {
   evt.preventDefault();
-  var target = evt.target;
-  target.remove();
-  target.removeEventListener("click", deleteItem);
-  tasksAll.innerHTML = parseInt(tasksAll.innerHTML) - 1;
+  if (evt.target != evt.currentTarget) {
+    evt.target.removeEventListener("click", deleteItem);
+    evt.currentTarget.remove();
+    tasksAll.innerHTML = parseInt(tasksAll.innerHTML) - 1;
+  }
 }
 
 input.addEventListener("dblclick", addsItemByClick);
