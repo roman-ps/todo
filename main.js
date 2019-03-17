@@ -15,7 +15,8 @@ function createElem() {
     console.log(newElement);
     newElement.addEventListener("click", deleteItem);
     active.appendChild(newElement);
-    taskText.innerHTML = input.value;
+    var taskTextNew = newElement.querySelector(".task__main");
+    taskTextNew.innerText = input.value;
     tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
   }
   input.value = '';
