@@ -38,9 +38,15 @@ function addsItemByBtn(evt){
 function deleteItem(evt) {
   evt.preventDefault();
   if (evt.target != evt.currentTarget) {
-    evt.target.removeEventListener("click", deleteItem);
-    evt.currentTarget.remove();
-    tasksAll.innerHTML = parseInt(tasksAll.innerHTML) - 1;
+    if (evt.currentTarget.classList.contains("complete")) {
+      tasksComplete.innerHTML = parseInt(tasksComplete.innerHTML) - 1;
+      evt.target.removeEventListener("click", deleteItem);
+      evt.currentTarget.remove();
+    } else {
+      evt.target.removeEventListener("click", deleteItem);
+      evt.currentTarget.remove();
+      tasksAll.innerHTML = parseInt(tasksAll.innerHTML) - 1;
+    }
   }
   if (evt.target === evt.currentTarget) {
     if (evt.target.classList.contains("complete")) {
