@@ -86,3 +86,11 @@ body {
 .footer {
   text-align: center;
 }
+
+.complete {
+  background-color: greenyellow;
+}
+
+.linethrough {
+  text-decoration: line-through;
+}
