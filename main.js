@@ -34,37 +34,47 @@ function addsItemByBtn(evt){
   }
 }
 
+function AllToComplete(evt) {
+  evt.target.classList.add("complete");
+  evt.target.classList.add("linethrough");
+}
+
+function CompleteToAll(evt) {
+  evt.target.classList.remove("complete");
+  evt.target.classList.remove("linethrough");
+}
+
+// счетчик задач
+function updCount(evt, number) {
+  evt.innerHTML = parseInt(evt.innerHTML) + number;
+}
+
 // удаление элемента
 function deleteItem(evt) {
   evt.preventDefault();
   if (evt.target != evt.currentTarget) {
     if (evt.currentTarget.classList.contains("complete")) {
-      tasksComplete.innerHTML = parseInt(tasksComplete.innerHTML) - 1;
+      updCount(tasksComplete, -1);
       evt.target.removeEventListener("click", deleteItem);
       evt.currentTarget.remove();
     } else {
       evt.target.removeEventListener("click", deleteItem);
       evt.currentTarget.remove();
-      tasksAll.innerHTML = parseInt(tasksAll.innerHTML) - 1;
+      updCount(tasksAll, -1);
     }
   }
   if (evt.target === evt.currentTarget) {
     if (evt.target.classList.contains("complete")) {
-      evt.target.classList.remove("complete");
-      evt.target.classList.remove("linethrough");
-      tasksComplete.innerHTML = parseInt(tasksComplete.innerHTML) - 1;
-      tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
-    }
-    else {
-      evt.target.classList.add("complete");
-      evt.target.classList.add("linethrough");
-      tasksComplete.innerHTML = parseInt(tasksComplete.innerHTML) + 1;
-      tasksAll.innerHTML = parseInt(tasksAll.innerHTML) - 1;
+      CompleteToAll(evt);
+      updCount(tasksComplete, -1);
+      updCount(tasksAll, 1);
+    } else {
+      AllToComplete(evt);
+      updCount(tasksComplete, +1);
+      updCount(tasksAll, -1);
     }
   }
 }
 
 input.addEventListener("dblclick", addsItemByClick);
 input.addEventListener("keydown", addsItemByBtn);
-
-//element.classList.contains(class);
