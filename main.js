@@ -52,19 +52,21 @@ function updCount(evt, number) {
 // удаление элемента
 function deleteItem(evt) {
   evt.preventDefault();
-  if (evt.target != evt.currentTarget) {
-    if (evt.currentTarget.classList.contains("complete")) {
+  var child = evt.target;
+  var parent = evt.currentTarget;
+  if (child != parent) {
+    if (parent.classList.contains("complete")) {
       updCount(tasksComplete, -1);
-      evt.target.removeEventListener("click", deleteItem);
-      evt.currentTarget.remove();
+      child.removeEventListener("click", deleteItem);
+      parent.remove();
     } else {
-      evt.target.removeEventListener("click", deleteItem);
-      evt.currentTarget.remove();
+      child.removeEventListener("click", deleteItem);
+      parent.remove();
       updCount(tasksAll, -1);
     }
   }
-  if (evt.target === evt.currentTarget) {
-    if (evt.target.classList.contains("complete")) {
+  if (child === parent) {
+    if (child.classList.contains("complete")) {
       CompleteToAll(evt);
       updCount(tasksComplete, -1);
       updCount(tasksAll, 1);
