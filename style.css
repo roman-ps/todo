@@ -14,10 +14,10 @@ body {
 }
 
 .main {
+  background-color: #c3d9ff;
   margin-bottom: 20px;
   padding: 20px 0;
   text-align: center;
-  border: 1px dashed black;
 }
 
 .tasks {
