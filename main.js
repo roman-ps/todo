@@ -7,6 +7,24 @@ var active = document.querySelector(".active");
 var tasksAll = document.querySelector(".tasks__all span");
 var tasksComplete = document.querySelector(".tasks__complete span");
 
+
+// загрузка из localStorage 
+function getStorage(evt){
+  evt.preventDefault();
+    var ofStorage = localStorage.getItem(1);
+    if (typeof ofStorage !== 'undefined' && ofStorage !== null) { 
+      for (var i = 1; i <= localStorage.length; i++) { 
+        var newElement = task.cloneNode(true);
+        newElement.addEventListener("click", deleteItem);
+        active.appendChild(newElement);
+        var taskTextNew = newElement.querySelector(".task__main");
+        taskTextNew.innerText = localStorage.getItem(i);
+        tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
+        console.log(i);
+      }
+    }
+}
+
 // создание нового элемента
 function createElem() {
   if (input.value != '') {
@@ -16,6 +34,7 @@ function createElem() {
     var taskTextNew = newElement.querySelector(".task__main");
     taskTextNew.innerText = input.value;
     tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
+    localStorage.setItem(tasksAll.innerText, input.value);
   }
   input.value = '';
 }
@@ -80,3 +99,4 @@ function deleteItem(evt) {
 
 input.addEventListener("dblclick", addsItemByClick);
 input.addEventListener("keydown", addsItemByBtn);
+document.addEventListener("DOMContentLoaded", getStorage);
