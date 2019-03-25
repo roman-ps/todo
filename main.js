@@ -6,6 +6,7 @@ var input = document.querySelector(".add");
 var active = document.querySelector(".active");
 var tasksAll = document.querySelector(".tasks__all span");
 var tasksComplete = document.querySelector(".tasks__complete span");
+var count = 0;
 
 
 // загрузка из localStorage 
@@ -13,7 +14,7 @@ function getStorage(evt){
   evt.preventDefault();
     var ofStorage = localStorage.getItem(1);
     if (typeof ofStorage !== 'undefined' && ofStorage !== null) { 
-      for (var i = 1; i <= localStorage.length; i++) { 
+      for (var i = 1; i < localStorage.length - 1; i++) { 
         var newElement = task.cloneNode(true);
         newElement.addEventListener("click", deleteItem);
         active.appendChild(newElement);
@@ -34,7 +35,11 @@ function createElem() {
     var taskTextNew = newElement.querySelector(".task__main");
     taskTextNew.innerText = input.value;
     tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
-    localStorage.setItem(tasksAll.innerText, input.value);
+    localStorage.setItem(count, input.value);
+    count++;
+    newElement.id = count;
+    localStorage.setItem("count", count);
+    console.log(count);
   }
   input.value = '';
 }
@@ -78,10 +83,14 @@ function deleteItem(evt) {
       updCount(tasksComplete, -1);
       child.removeEventListener("click", deleteItem);
       parent.remove();
+      count--;
+      localStorage.setItem("count", count);
     } else {
       child.removeEventListener("click", deleteItem);
       parent.remove();
       updCount(tasksAll, -1);
+      count--;
+      localStorage.setItem("count", count);
     }
   }
   if (child === parent) {
