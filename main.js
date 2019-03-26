@@ -13,15 +13,16 @@ var count = 0;
 function getStorage(evt){
   evt.preventDefault();
     var ofStorage = localStorage.getItem(1);
+    count = localStorage.getItem("count");
     if (typeof ofStorage !== 'undefined' && ofStorage !== null) { 
-      for (var i = 1; i < localStorage.length - 1; i++) { 
+      for (var i = 0; i < localStorage.length - 1; i++) { 
         var newElement = task.cloneNode(true);
         newElement.addEventListener("click", deleteItem);
+        newElement.id = i+1;
         active.appendChild(newElement);
         var taskTextNew = newElement.querySelector(".task__main");
         taskTextNew.innerText = localStorage.getItem(i);
         tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
-        console.log(i);
       }
     }
 }
