@@ -7,6 +7,22 @@ var active = document.querySelector(".active");
 var tasksAll = document.querySelector(".tasks__all span");
 var tasksComplete = document.querySelector(".tasks__complete span");
 var count = 0;
+var tasks = [{id: 1, todo: '434gd'}, {id: 2, todo: 'fgd'}, {id: 3, todo: '564'}];
+
+
+function getId() {
+  return tasks.reduce(function(a,b) {
+    return Math.max(a,b);
+  });
+}
+
+function addTodo() {
+  tasks.push({id: getId(), todo: input.value});
+}
+
+function removeTodo(evt) {
+  tasks.splice()
+}
 
 
 // загрузка из localStorage 
@@ -15,7 +31,7 @@ function getStorage(evt){
     var ofStorage = localStorage.getItem(1);
     count = localStorage.getItem("count");
     if (typeof ofStorage !== 'undefined' && ofStorage !== null) { 
-      for (var i = 0; i < localStorage.length - 1; i++) { 
+      for (var i = 0; i < count; i++) { 
         var newElement = task.cloneNode(true);
         newElement.addEventListener("click", deleteItem);
         newElement.id = i+1;
@@ -25,6 +41,7 @@ function getStorage(evt){
         tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
       }
     }
+    console.log(tasks);
 }
 
 // создание нового элемента
@@ -33,14 +50,18 @@ function createElem() {
     var newElement = task.cloneNode(true);
     newElement.addEventListener("click", deleteItem);
     active.appendChild(newElement);
+    addTodo();
+    console.log(getId());
     var taskTextNew = newElement.querySelector(".task__main");
     taskTextNew.innerText = input.value;
     tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
-    localStorage.setItem(count, input.value);
-    count++;
-    newElement.id = count;
+    //arrayTasks.push(taskTextNew.innerText);
+    //localStorage.setItem(count, input.value);
+    //count++;
+    //newElement.id = count;
     localStorage.setItem("count", count);
-    console.log(count);
+    //console.log(count);
+    //console.log(tasks);
   }
   input.value = '';
 }
