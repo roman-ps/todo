@@ -24,14 +24,14 @@ function addTodo() {
 function removeTodo(evt) {
   var idNumber = evt.currentTarget.getAttribute("id");
   var a = tasks.filter(function (number) {
-    console.log(number.id);
-    console.log(idNumber);
-    return number != idNumber;
+    console.log('number.id: ' + number.id);
+    console.log('idNumber: ' + idNumber);
+    return number.id != idNumber;
   })
   //console.log(a);
   //console.log(idNumber);
   //console.log(evt.currentTarget);
-  //console.log(tasks);  
+  console.log('a: ', a);  
 }
 
 
@@ -115,16 +115,16 @@ function deleteItem(evt) {
       parent.remove();
       count--;
       localStorage.setItem("count", count);
-      removeTodo(evt);
       //console.log(tasks);
+      removeTodo(evt);
     } else {
       child.removeEventListener("click", deleteItem);
       parent.remove();
       updCount(tasksAll, -1);
       count--;
       localStorage.setItem("count", count);
-      removeTodo(evt);
       //console.log(tasks);
+      removeTodo(evt);
     }
   }
   if (child === parent) {
