@@ -7,21 +7,31 @@ var active = document.querySelector(".active");
 var tasksAll = document.querySelector(".tasks__all span");
 var tasksComplete = document.querySelector(".tasks__complete span");
 var count = 0;
-var tasks = [{id: 1, todo: 'первый'}, {id: 2, todo: 'второй'}, {id: 3, todo: 'третий'}];
+//var tasks = [{id: 1, todo: 'первый'}, {id: 2, todo: 'второй'}, {id: 3, todo: 'третий'}];
+var tasks = [];
 
-
+// определение id
 function getId() {
   return tasks.reduce(function(a,b) {
-    return Math.max(a.id,b.id);
-  });
+    return (Math.max(a,b.id) + 1);
+  },0);
 }
 
 function addTodo() {
-  tasks.push({id: getId()+1, todo: input.value});
+  tasks.push({id: getId(), todo: input.value});
 }
 
 function removeTodo(evt) {
-  //tasks.splice();
+  var idNumber = evt.currentTarget.getAttribute("id");
+  var a = tasks.filter(function (number) {
+    console.log(number.id);
+    console.log(idNumber);
+    return number != idNumber;
+  })
+  //console.log(a);
+  //console.log(idNumber);
+  //console.log(evt.currentTarget);
+  //console.log(tasks);  
 }
 
 
@@ -51,9 +61,8 @@ function createElem() {
     newElement.addEventListener("click", deleteItem);
     active.appendChild(newElement);
     addTodo();
-    //console.log(addTodo())
-    //console.log(getId);
     var taskTextNew = newElement.querySelector(".task__main");
+    newElement.setAttribute('id', getId());
     taskTextNew.innerText = input.value;
     tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
     //arrayTasks.push(taskTextNew.innerText);
@@ -106,12 +115,16 @@ function deleteItem(evt) {
       parent.remove();
       count--;
       localStorage.setItem("count", count);
+      removeTodo(evt);
+      //console.log(tasks);
     } else {
       child.removeEventListener("click", deleteItem);
       parent.remove();
       updCount(tasksAll, -1);
       count--;
       localStorage.setItem("count", count);
+      removeTodo(evt);
+      //console.log(tasks);
     }
   }
   if (child === parent) {
