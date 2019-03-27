@@ -7,21 +7,21 @@ var active = document.querySelector(".active");
 var tasksAll = document.querySelector(".tasks__all span");
 var tasksComplete = document.querySelector(".tasks__complete span");
 var count = 0;
-var tasks = [{id: 1, todo: '434gd'}, {id: 2, todo: 'fgd'}, {id: 3, todo: '564'}];
+var tasks = [{id: 1, todo: 'первый'}, {id: 2, todo: 'второй'}, {id: 3, todo: 'третий'}];
 
 
 function getId() {
   return tasks.reduce(function(a,b) {
-    return Math.max(a,b);
+    return Math.max(a.id,b.id);
   });
 }
 
 function addTodo() {
-  tasks.push({id: getId(), todo: input.value});
+  tasks.push({id: getId()+1, todo: input.value});
 }
 
 function removeTodo(evt) {
-  tasks.splice()
+  //tasks.splice();
 }
 
 
@@ -51,7 +51,8 @@ function createElem() {
     newElement.addEventListener("click", deleteItem);
     active.appendChild(newElement);
     addTodo();
-    console.log(getId());
+    //console.log(addTodo())
+    //console.log(getId);
     var taskTextNew = newElement.querySelector(".task__main");
     taskTextNew.innerText = input.value;
     tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
@@ -60,8 +61,6 @@ function createElem() {
     //count++;
     //newElement.id = count;
     localStorage.setItem("count", count);
-    //console.log(count);
-    //console.log(tasks);
   }
   input.value = '';
 }
