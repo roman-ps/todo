@@ -18,7 +18,9 @@ function getId() {
 }
 
 function addTodo() {
-  tasks.push({id: getId(), todo: input.value});
+  last = {id: getId(), todo: input.value};
+  tasks.push(last);
+  return last;
 }
 
 function removeTodo(evt) {
@@ -28,9 +30,6 @@ function removeTodo(evt) {
     console.log('idNumber: ' + idNumber);
     return number.id != idNumber;
   })
-  //console.log(a);
-  //console.log(idNumber);
-  //console.log(evt.currentTarget);
   console.log('a: ', a);  
 }
 
@@ -60,10 +59,10 @@ function createElem() {
     var newElement = task.cloneNode(true);
     newElement.addEventListener("click", deleteItem);
     active.appendChild(newElement);
-    addTodo();
+    const a = addTodo(input.value);
     var taskTextNew = newElement.querySelector(".task__main");
-    newElement.setAttribute('id', getId());
-    taskTextNew.innerText = input.value;
+    newElement.setAttribute('id', a.id);
+    taskTextNew.innerText = a.todo;
     tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
     //arrayTasks.push(taskTextNew.innerText);
     //localStorage.setItem(count, input.value);
