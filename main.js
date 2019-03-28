@@ -10,27 +10,26 @@ var count = 0;
 //var tasks = [{id: 1, todo: 'первый'}, {id: 2, todo: 'второй'}, {id: 3, todo: 'третий'}];
 var tasks = [];
 
-// определение id
+// определение наибольшего id
 function getId() {
   return tasks.reduce(function(a,b) {
     return (Math.max(a,b.id) + 1);
   },0);
 }
 
+// добавление id и текста в задание
 function addTodo() {
   last = {id: getId(), todo: input.value};
   tasks.push(last);
   return last;
 }
 
+// удаление задания по id
 function removeTodo(evt) {
   var idNumber = evt.currentTarget.getAttribute("id");
-  var a = tasks.filter(function (number) {
-    console.log('number.id: ' + number.id);
-    console.log('idNumber: ' + idNumber);
+  tasks = tasks.filter(function (number) {
     return number.id != idNumber;
   })
-  console.log('a: ', a);  
 }
 
 
