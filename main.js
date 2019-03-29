@@ -7,7 +7,6 @@ var active = document.querySelector(".active");
 var tasksAll = document.querySelector(".tasks__all span");
 var tasksComplete = document.querySelector(".tasks__complete span");
 var count = 0;
-//var tasks = [{id: 1, todo: 'первый'}, {id: 2, todo: 'второй'}, {id: 3, todo: 'третий'}];
 var tasks = [];
 
 // определение наибольшего id
@@ -58,18 +57,49 @@ function createElem() {
     var newElement = task.cloneNode(true);
     newElement.addEventListener("click", deleteItem);
     active.appendChild(newElement);
-    const a = addTodo(input.value);
     var taskTextNew = newElement.querySelector(".task__main");
+    const a = addTodo(input.value);
     newElement.setAttribute('id', a.id);
     taskTextNew.innerText = a.todo;
     tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
-    //arrayTasks.push(taskTextNew.innerText);
-    //localStorage.setItem(count, input.value);
-    //count++;
-    //newElement.id = count;
-    localStorage.setItem("count", count);
+    localStorage.setItem(a.id, a.todo);
   }
   input.value = '';
+}
+
+
+// удаление элемента
+function deleteItem(evt) {
+  evt.preventDefault();
+  var child = evt.target;
+  var parent = evt.currentTarget;
+  var searchId = parent.getAttribute("id");
+  if (child != parent) {
+    if (parent.classList.contains("complete")) {
+      updCount(tasksComplete, -1);
+      child.removeEventListener("click", deleteItem);
+      parent.remove();
+      localStorage.removeItem(searchId);
+      removeTodo(evt);
+    } else {
+      child.removeEventListener("click", deleteItem);
+      parent.remove();
+      updCount(tasksAll, -1);
+      localStorage.removeItem(searchId);
+      removeTodo(evt);
+    }
+  }
+  if (child === parent) {
+    if (child.classList.contains("complete")) {
+      CompleteToAll(evt);
+      updCount(tasksComplete, -1);
+      updCount(tasksAll, 1);
+    } else {
+      AllToComplete(evt);
+      updCount(tasksComplete, +1);
+      updCount(tasksAll, -1);
+    }
+  }
 }
 
 // добавление по клику
@@ -99,43 +129,6 @@ function CompleteToAll(evt) {
 // счетчик задач
 function updCount(evt, number) {
   evt.innerHTML = parseInt(evt.innerHTML) + number;
-}
-
-// удаление элемента
-function deleteItem(evt) {
-  evt.preventDefault();
-  var child = evt.target;
-  var parent = evt.currentTarget;
-  if (child != parent) {
-    if (parent.classList.contains("complete")) {
-      updCount(tasksComplete, -1);
-      child.removeEventListener("click", deleteItem);
-      parent.remove();
-      count--;
-      localStorage.setItem("count", count);
-      //console.log(tasks);
-      removeTodo(evt);
-    } else {
-      child.removeEventListener("click", deleteItem);
-      parent.remove();
-      updCount(tasksAll, -1);
-      count--;
-      localStorage.setItem("count", count);
-      //console.log(tasks);
-      removeTodo(evt);
-    }
-  }
-  if (child === parent) {
-    if (child.classList.contains("complete")) {
-      CompleteToAll(evt);
-      updCount(tasksComplete, -1);
-      updCount(tasksAll, 1);
-    } else {
-      AllToComplete(evt);
-      updCount(tasksComplete, +1);
-      updCount(tasksAll, -1);
-    }
-  }
 }
 
 input.addEventListener("dblclick", addsItemByClick);
