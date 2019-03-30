@@ -18,7 +18,7 @@ function getId() {
 
 // добавление id и текста в задание
 function addTodo() {
-  last = {id: getId(), todo: input.value};
+  last = {id: getId(), todo: input.value, status: 0};
   tasks.push(last);
   return last;
 }
@@ -29,6 +29,14 @@ function removeTodo(evt) {
   tasks = tasks.filter(function (number) {
     return number.id != idNumber;
   })
+}
+
+function whatIsComplete(evt) {
+  var complete = evt.currentTarget.getAttribute("status");
+  var a1 = tasks.filter(function (name) {
+    return name.status = complete;
+  })
+  return a1.length;
 }
 
 
@@ -59,12 +67,13 @@ function createElem() {
     active.appendChild(newElement);
     var taskTextNew = newElement.querySelector(".task__main");
     const a = addTodo(input.value);
-    newElement.setAttribute('id', a.id);
     taskTextNew.innerText = a.todo;
-    tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
-    localStorage.setItem(a.id, a.todo);
+    newElement.setAttribute('id', a.id);
+    tasksAll.innerHTML = tasks.length;
+    localStorage.setItem("tasks", tasks);
   }
   input.value = '';
+    //console.log(tasks);
 }
 
 
@@ -73,20 +82,21 @@ function deleteItem(evt) {
   evt.preventDefault();
   var child = evt.target;
   var parent = evt.currentTarget;
-  var searchId = parent.getAttribute("id");
   if (child != parent) {
     if (parent.classList.contains("complete")) {
       updCount(tasksComplete, -1);
       child.removeEventListener("click", deleteItem);
       parent.remove();
-      localStorage.removeItem(searchId);
       removeTodo(evt);
+      localStorage.setItem("tasks", tasks);
     } else {
       child.removeEventListener("click", deleteItem);
       parent.remove();
-      updCount(tasksAll, -1);
-      localStorage.removeItem(searchId);
       removeTodo(evt);
+      updCount(tasksAll, -1);
+      localStorage.setItem("tasks", tasks);
+      //console.log('tasks: ', tasks);
+      //console.log('tasks length: ' + tasks.length);
     }
   }
   if (child === parent) {
