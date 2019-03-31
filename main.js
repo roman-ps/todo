@@ -31,14 +31,12 @@ function removeTodo(evt) {
   })
 }
 
+//вычисление кол-во выполненных заданий
 function whatIsComplete(evt) {
-  var complete = evt.currentTarget.getAttribute("status");
-  var a1 = tasks.filter(function (name) {
-    return name.status = complete;
-  })
-  return a1.length;
+  return tasks.reduce(function (a, name) {
+    return a + +(name.status > 0); 
+  },0)
 }
-
 
 // загрузка из localStorage 
 function getStorage(evt){
@@ -84,7 +82,8 @@ function deleteItem(evt) {
   var parent = evt.currentTarget;
   if (child != parent) {
     if (parent.classList.contains("complete")) {
-      updCount(tasksComplete, -1);
+      tasksComplete.innerHTML = whatIsComplete();
+      //updCount(tasksComplete, -1);
       child.removeEventListener("click", deleteItem);
       parent.remove();
       removeTodo(evt);
@@ -93,19 +92,22 @@ function deleteItem(evt) {
       child.removeEventListener("click", deleteItem);
       parent.remove();
       removeTodo(evt);
-      updCount(tasksAll, -1);
+      tasksAll.innerHTML = tasks.length - whatIsComplete();
+      //updCount(tasksAll, -1);
       localStorage.setItem("tasks", tasks);
-      //console.log('tasks: ', tasks);
-      //console.log('tasks length: ' + tasks.length);
     }
   }
   if (child === parent) {
     if (child.classList.contains("complete")) {
       CompleteToAll(evt);
+      //tasksComplete.innerHTML = whatIsComplete();
+      //tasksAll.innerHTML = tasks.length - whatIsComplete();
       updCount(tasksComplete, -1);
       updCount(tasksAll, 1);
     } else {
       AllToComplete(evt);
+      //tasksComplete.innerHTML = whatIsComplete();
+      //tasksAll.innerHTML = tasks.length - whatIsComplete();
       updCount(tasksComplete, +1);
       updCount(tasksAll, -1);
     }
