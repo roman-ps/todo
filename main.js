@@ -8,6 +8,7 @@ var tasksAll = document.querySelector(".tasks__all span");
 var tasksComplete = document.querySelector(".tasks__complete span");
 var count = 0;
 var tasks = [];
+var ActiveTasks = tasks.length - whatIsComplete();
 
 // определение наибольшего id
 function getId() {
@@ -31,11 +32,21 @@ function removeTodo(evt) {
   })
 }
 
-//вычисление кол-во выполненных заданий
+// вычисление кол-во выполненных заданий
 function whatIsComplete(evt) {
   return tasks.reduce(function (a, name) {
     return a + +(name.status > 0); 
   },0)
+}
+
+// достаем из tasks по id
+function getFromTasks(evt) {
+  var getId = evt.currentTarget.getAttribute("id");
+  var getTasks = tasks.filter(function (number) {
+    return number.id == getId;
+  })
+  console.log(getTasks);
+  return getTasks[getId].status;
 }
 
 // загрузка из localStorage 
@@ -92,7 +103,7 @@ function deleteItem(evt) {
       child.removeEventListener("click", deleteItem);
       parent.remove();
       removeTodo(evt);
-      tasksAll.innerHTML = tasks.length - whatIsComplete();
+      tasksAll.innerHTML = ActiveTasks;
       //updCount(tasksAll, -1);
       localStorage.setItem("tasks", tasks);
     }
@@ -101,15 +112,16 @@ function deleteItem(evt) {
     if (child.classList.contains("complete")) {
       CompleteToAll(evt);
       //tasksComplete.innerHTML = whatIsComplete();
-      //tasksAll.innerHTML = tasks.length - whatIsComplete();
+      //tasksAll.innerHTML = ActiveTasks;
       updCount(tasksComplete, -1);
       updCount(tasksAll, 1);
     } else {
       AllToComplete(evt);
       //tasksComplete.innerHTML = whatIsComplete();
-      //tasksAll.innerHTML = tasks.length - whatIsComplete();
+      //tasksAll.innerHTML = ActiveTasks;
       updCount(tasksComplete, +1);
       updCount(tasksAll, -1);
+      console.log(getFromTasks(evt));
     }
   }
 }
