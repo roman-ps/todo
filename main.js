@@ -19,7 +19,7 @@ function getId() {
 
 // добавление id и текста в задание
 function addTodo() {
-  last = {id: getId(), todo: input.value, status: 0};
+  last = {id: getId(), todo: input.value, status: false};
   tasks.push(last);
   return last;
 }
@@ -39,13 +39,17 @@ function whatIsComplete(evt) {
   },0)
 }
 
+// определяем id элемента
+function getTaskId(evt) {
+  return evt.currentTarget.getAttribute("id");
+}
+
 // возвращаем элемент по id
-function getTaskById(evt) {
-  var getId = evt.currentTarget.getAttribute("id");
+function getTaskById(id) {
   var currentTask = tasks.filter(function (number) {
-    return number.id == getId;
+    return number.id == id;
   })
-  return currentTask[getId];
+  return currentTask.pop();
 }
 
 // загрузка из localStorage 
@@ -86,7 +90,7 @@ function createElem() {
 
 
 // удаление элемента
-function deleteItem(evt) {
+/*function deleteItem(evt) {
   evt.preventDefault();
   var child = evt.target;
   var parent = evt.currentTarget;
@@ -109,23 +113,59 @@ function deleteItem(evt) {
   }
   if (child === parent) {
     if (child.classList.contains("complete")) {
-      //CompleteToAll(evt);
+      CompleteToAll(evt);
       //tasksComplete.innerHTML = whatIsComplete();
       //tasksAll.innerHTML = ActiveTasks;
       updCount(tasksComplete, -1);
       updCount(tasksAll, 1);
-      console.log(getFromTasks(evt));
-      getFromTasks(evt);
+      console.log(getTaskById(evt));
     } else {
-      //AllToComplete(evt);
+      AllToComplete(evt);
       //tasksComplete.innerHTML = whatIsComplete();
       //tasksAll.innerHTML = ActiveTasks;
       updCount(tasksComplete, +1);
       updCount(tasksAll, -1);
-      console.log(getFromTasks(evt));
-      getFromTasks(evt);
+      console.log(getTaskById(evt));
     }
   }
+}*/
+
+// удаление элемента
+function deleteItem(evt) {
+  evt.preventDefault();
+  var child = evt.target;
+  var parent = evt.currentTarget;
+  const thisElement = getTaskById(getTaskId(evt));
+    if (child != parent) {
+      switch (thisElement.status) {
+        case 'true':
+          child.removeEventListener("click", deleteItem);
+          parent.remove();
+          removeTodo(evt);
+          tasksComplete.innerHTML = whatIsComplete();
+          break;
+        case 'false':
+          child.removeEventListener("click", deleteItem);
+          parent.remove();
+          removeTodo(evt);
+          tasksAll.innerHTML = ActiveTasks;
+          break;
+                         }
+    }
+    if (child === parent) {
+      switch (thisElement) {
+        case 'true':
+          thisElement.status = !thisElement.status;
+          tasksComplete.innerHTML = whatIsComplete();
+          tasksAll.innerHTML = ActiveTasks;
+          break;
+        case 'false':
+          thisElement.status = !thisElement.status;
+          tasksAll.innerHTML = ActiveTasks;
+          tasksComplete.innerHTML = whatIsComplete();
+          break;
+                         }
+    }
 }
 
 // добавление по клику
