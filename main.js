@@ -39,14 +39,13 @@ function whatIsComplete(evt) {
   },0)
 }
 
-// достаем из tasks по id
-function getFromTasks(evt) {
+// возвращаем элемент по id
+function getTaskById(evt) {
   var getId = evt.currentTarget.getAttribute("id");
-  var getTasks = tasks.filter(function (number) {
+  var currentTask = tasks.filter(function (number) {
     return number.id == getId;
   })
-  console.log(getTasks);
-  return getTasks[getId].status;
+  return currentTask[getId];
 }
 
 // загрузка из localStorage 
@@ -110,18 +109,21 @@ function deleteItem(evt) {
   }
   if (child === parent) {
     if (child.classList.contains("complete")) {
-      CompleteToAll(evt);
+      //CompleteToAll(evt);
       //tasksComplete.innerHTML = whatIsComplete();
       //tasksAll.innerHTML = ActiveTasks;
       updCount(tasksComplete, -1);
       updCount(tasksAll, 1);
+      console.log(getFromTasks(evt));
+      getFromTasks(evt);
     } else {
-      AllToComplete(evt);
+      //AllToComplete(evt);
       //tasksComplete.innerHTML = whatIsComplete();
       //tasksAll.innerHTML = ActiveTasks;
       updCount(tasksComplete, +1);
       updCount(tasksAll, -1);
       console.log(getFromTasks(evt));
+      getFromTasks(evt);
     }
   }
 }
