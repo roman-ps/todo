@@ -8,7 +8,7 @@ var tasksAll = document.querySelector(".tasks__all span");
 var tasksComplete = document.querySelector(".tasks__complete span");
 var count = 0;
 var tasks = [];
-var ActiveTasks = tasks.length - whatIsComplete();
+var ActiveTasks;
 
 // определение наибольшего id
 function getId() {
@@ -149,17 +149,19 @@ function handleTaskClick(evt) {
         child.removeEventListener("click", handleTaskClick);
         parent.remove();
         removeTodo(evt);
-        tasksAll.innerHTML = ActiveTasks;        
+        tasksAll.innerHTML = tasks.length - whatIsComplete();        
     }
   }
   if (child === parent) {
       if (thisElement.status) {
+        console.log(thisElement.status)
           thisElement.status = !thisElement.status;
           tasksComplete.innerHTML = whatIsComplete();
-          tasksAll.innerHTML = ActiveTasks;
+          tasksAll.innerHTML = tasks.length - whatIsComplete();
       } else {
+        console.log(thisElement.status)
           thisElement.status = !thisElement.status;
-          tasksAll.innerHTML = ActiveTasks;
+          tasksAll.innerHTML = tasks.length - whatIsComplete();
           tasksComplete.innerHTML = whatIsComplete();        
       }
   }
