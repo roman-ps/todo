@@ -75,7 +75,7 @@ function getStorage(evt){
 function createElem() {
   if (input.value != '') {
     var newElement = task.cloneNode(true);
-    newElement.addEventListener("click", deleteItem);
+    newElement.addEventListener("click", handleTaskClick);
     active.appendChild(newElement);
     var taskTextNew = newElement.querySelector(".task__main");
     const a = addTodo(input.value);
@@ -130,42 +130,39 @@ function createElem() {
   }
 }*/
 
-// удаление элемента
-function deleteItem(evt) {
+//удаление элемента
+
+
+// обработка нажатия по задаче
+function handleTaskClick(evt) {
   evt.preventDefault();
   var child = evt.target;
   var parent = evt.currentTarget;
   const thisElement = getTaskById(getTaskId(evt));
-    if (child != parent) {
-      switch (thisElement.status) {
-        case 'true':
-          child.removeEventListener("click", deleteItem);
-          parent.remove();
-          removeTodo(evt);
-          tasksComplete.innerHTML = whatIsComplete();
-          break;
-        case 'false':
-          child.removeEventListener("click", deleteItem);
-          parent.remove();
-          removeTodo(evt);
-          tasksAll.innerHTML = ActiveTasks;
-          break;
-                         }
+  if (child != parent) {
+    if (thisElement.status) {
+        child.removeEventListener("click", handleTaskClick);
+        parent.remove();
+        removeTodo(evt);
+        tasksComplete.innerHTML = whatIsComplete();
+    } else {
+        child.removeEventListener("click", handleTaskClick);
+        parent.remove();
+        removeTodo(evt);
+        tasksAll.innerHTML = ActiveTasks;        
     }
-    if (child === parent) {
-      switch (thisElement) {
-        case 'true':
+  }
+  if (child === parent) {
+      if (thisElement.status) {
           thisElement.status = !thisElement.status;
           tasksComplete.innerHTML = whatIsComplete();
           tasksAll.innerHTML = ActiveTasks;
-          break;
-        case 'false':
+      } else {
           thisElement.status = !thisElement.status;
           tasksAll.innerHTML = ActiveTasks;
-          tasksComplete.innerHTML = whatIsComplete();
-          break;
-                         }
-    }
+          tasksComplete.innerHTML = whatIsComplete();        
+      }
+  }
 }
 
 // добавление по клику
