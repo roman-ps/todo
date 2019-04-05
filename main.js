@@ -88,51 +88,6 @@ function createElem() {
     //console.log(tasks);
 }
 
-
-// удаление элемента
-/*function deleteItem(evt) {
-  evt.preventDefault();
-  var child = evt.target;
-  var parent = evt.currentTarget;
-  if (child != parent) {
-    if (parent.classList.contains("complete")) {
-      tasksComplete.innerHTML = whatIsComplete();
-      //updCount(tasksComplete, -1);
-      child.removeEventListener("click", deleteItem);
-      parent.remove();
-      removeTodo(evt);
-      localStorage.setItem("tasks", tasks);
-    } else {
-      child.removeEventListener("click", deleteItem);
-      parent.remove();
-      removeTodo(evt);
-      tasksAll.innerHTML = ActiveTasks;
-      //updCount(tasksAll, -1);
-      localStorage.setItem("tasks", tasks);
-    }
-  }
-  if (child === parent) {
-    if (child.classList.contains("complete")) {
-      CompleteToAll(evt);
-      //tasksComplete.innerHTML = whatIsComplete();
-      //tasksAll.innerHTML = ActiveTasks;
-      updCount(tasksComplete, -1);
-      updCount(tasksAll, 1);
-      console.log(getTaskById(evt));
-    } else {
-      AllToComplete(evt);
-      //tasksComplete.innerHTML = whatIsComplete();
-      //tasksAll.innerHTML = ActiveTasks;
-      updCount(tasksComplete, +1);
-      updCount(tasksAll, -1);
-      console.log(getTaskById(evt));
-    }
-  }
-}*/
-
-//удаление элемента
-
-
 // обработка нажатия по задаче
 function handleTaskClick(evt) {
   evt.preventDefault();
@@ -156,11 +111,13 @@ function handleTaskClick(evt) {
       if (thisElement.status) {
         console.log(thisElement.status)
           thisElement.status = !thisElement.status;
+                child.classList.toggle("complete");
           tasksComplete.innerHTML = whatIsComplete();
           tasksAll.innerHTML = tasks.length - whatIsComplete();
       } else {
         console.log(thisElement.status)
           thisElement.status = !thisElement.status;
+        child.classList.toggle("complete");
           tasksAll.innerHTML = tasks.length - whatIsComplete();
           tasksComplete.innerHTML = whatIsComplete();        
       }
