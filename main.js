@@ -96,30 +96,28 @@ function handleTaskClick(evt) {
   const thisElement = getTaskById(getTaskId(evt));
   if (child != parent) {
     if (thisElement.status) {
-        child.removeEventListener("click", handleTaskClick);
-        parent.remove();
-        removeTodo(evt);
-        tasksComplete.innerHTML = whatIsComplete();
+      child.removeEventListener("click", handleTaskClick);
+      parent.remove();
+      removeTodo(evt);
+      tasksComplete.innerHTML = whatIsComplete();
     } else {
-        child.removeEventListener("click", handleTaskClick);
-        parent.remove();
-        removeTodo(evt);
-        tasksAll.innerHTML = tasks.length - whatIsComplete();        
+      child.removeEventListener("click", handleTaskClick);
+      parent.remove();
+      removeTodo(evt);
+      tasksAll.innerHTML = tasks.length - whatIsComplete();        
     }
   }
   if (child === parent) {
       if (thisElement.status) {
-        console.log(thisElement.status)
-          thisElement.status = !thisElement.status;
-                child.classList.toggle("complete");
-          tasksComplete.innerHTML = whatIsComplete();
-          tasksAll.innerHTML = tasks.length - whatIsComplete();
-      } else {
-        console.log(thisElement.status)
-          thisElement.status = !thisElement.status;
+        thisElement.status = !thisElement.status;
         child.classList.toggle("complete");
-          tasksAll.innerHTML = tasks.length - whatIsComplete();
-          tasksComplete.innerHTML = whatIsComplete();        
+        tasksComplete.innerHTML = whatIsComplete();
+        tasksAll.innerHTML = tasks.length - whatIsComplete();
+      } else {
+        thisElement.status = !thisElement.status;
+        child.classList.toggle("complete");
+        tasksAll.innerHTML = tasks.length - whatIsComplete();
+        tasksComplete.innerHTML = whatIsComplete();        
       }
   }
 }
@@ -136,16 +134,6 @@ function addsItemByBtn(evt){
   if (event.keyCode === KEYCODE_ENTER) {
     createElem();
   }
-}
-
-function AllToComplete(evt) {
-  evt.target.classList.add("complete");
-  evt.target.classList.add("linethrough");
-}
-
-function CompleteToAll(evt) {
-  evt.target.classList.remove("complete");
-  evt.target.classList.remove("linethrough");
 }
 
 // счетчик задач
