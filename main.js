@@ -33,7 +33,7 @@ function removeTodo(evt) {
 }
 
 // вычисление кол-во выполненных заданий
-function whatIsComplete(evt) {
+function getCompleteCount(evt) {
   return tasks.reduce(function (a, name) {
     return a + +(name.status > 0); 
   },0)
@@ -95,24 +95,26 @@ function handleTaskClick(evt) {
   var parent = evt.currentTarget;
   const thisElement = getTaskById(getTaskId(evt));
   if (child != parent) {
+    removeEvt(evt);
     if (thisElement.status) {
-      child.removeEventListener("click", handleTaskClick);
-      parent.remove();
-      removeTodo(evt);
-      tasksComplete.innerHTML = whatIsComplete();
+      tasksComplete.innerHTML = getCompleteCount();
     } else {
-      child.removeEventListener("click", handleTaskClick);
-      parent.remove();
-      removeTodo(evt);
-      tasksAll.innerHTML = tasks.length - whatIsComplete();        
+      tasksAll.innerHTML = tasks.length - getCompleteCount();        
     }
   }
   if (child === parent) {
     thisElement.status = !thisElement.status;
     child.classList.toggle("complete");
-    tasksAll.innerHTML = tasks.length - whatIsComplete();
-    tasksComplete.innerHTML = whatIsComplete(); 
+    tasksAll.innerHTML = tasks.length - getCompleteCount();
+    tasksComplete.innerHTML = getCompleteCount(); 
   }
+}
+
+// удаляем child и parent из handleTaskClick
+function removeEvt(evt) {
+  evt.target.removeEventListener("click", handleTaskClick);
+  evt.currentTarget.remove();
+  removeTodo(evt);
 }
 
 // добавление по клику
