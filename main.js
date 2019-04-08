@@ -108,17 +108,10 @@ function handleTaskClick(evt) {
     }
   }
   if (child === parent) {
-      if (thisElement.status) {
-        thisElement.status = !thisElement.status;
-        child.classList.toggle("complete");
-        tasksComplete.innerHTML = whatIsComplete();
-        tasksAll.innerHTML = tasks.length - whatIsComplete();
-      } else {
-        thisElement.status = !thisElement.status;
-        child.classList.toggle("complete");
-        tasksAll.innerHTML = tasks.length - whatIsComplete();
-        tasksComplete.innerHTML = whatIsComplete();        
-      }
+    thisElement.status = !thisElement.status;
+    child.classList.toggle("complete");
+    tasksAll.innerHTML = tasks.length - whatIsComplete();
+    tasksComplete.innerHTML = whatIsComplete(); 
   }
 }
 
