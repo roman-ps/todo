@@ -6,7 +6,6 @@ var input = document.querySelector(".add");
 var active = document.querySelector(".active");
 var tasksAll = document.querySelector(".tasks__all span");
 var tasksComplete = document.querySelector(".tasks__complete span");
-var count = 0;
 var tasks = [];
 var ActiveTasks;
 
@@ -85,7 +84,6 @@ function createElem() {
     localStorage.setItem("tasks", tasks);
   }
   input.value = '';
-    //console.log(tasks);
 }
 
 // обработка нажатия по задаче
@@ -94,20 +92,31 @@ function handleTaskClick(evt) {
   var child = evt.target;
   var parent = evt.currentTarget;
   const thisElement = getTaskById(getTaskId(evt));
+  const count = countTasks();
   if (child != parent) {
     removeEvt(evt);
     if (thisElement.status) {
-      tasksComplete.innerHTML = getCompleteCount();
+      writeCompleteTasks();
     } else {
-      tasksAll.innerHTML = tasks.length - getCompleteCount();        
+      countAllTasks();      
     }
   }
   if (child === parent) {
     thisElement.status = !thisElement.status;
     child.classList.toggle("complete");
-    tasksAll.innerHTML = tasks.length - getCompleteCount();
-    tasksComplete.innerHTML = getCompleteCount(); 
+    countAllTasks();
+    writeCompleteTasks();
   }
+}
+
+//считаем и выводим кол-во заданий
+function countAllTasks() {
+  tasksAll.innerHTML = tasks.length - getCompleteCount();
+}
+
+//выводим кол-во выполненных заданий
+function writeCompleteTasks() {
+  tasksComplete.innerHTML = getCompleteCount(); 
 }
 
 // удаляем child и parent из handleTaskClick
