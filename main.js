@@ -92,7 +92,6 @@ function handleTaskClick(evt) {
   var child = evt.target;
   var parent = evt.currentTarget;
   const thisElement = getTaskById(getTaskId(evt));
-  const count = countTasks();
   if (child != parent) {
     removeEvt(evt);
     if (thisElement.status) {
