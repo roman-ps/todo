@@ -54,20 +54,20 @@ function getTaskById(id) {
 // загрузка из localStorage 
 function getStorage(evt){
   evt.preventDefault();
-    var ofStorage = localStorage.getItem(1);
-    count = localStorage.getItem("count");
-    if (typeof ofStorage !== 'undefined' && ofStorage !== null) { 
-      for (var i = 0; i < count; i++) { 
-        var newElement = task.cloneNode(true);
-        newElement.addEventListener("click", deleteItem);
-        newElement.id = i+1;
-        active.appendChild(newElement);
-        var taskTextNew = newElement.querySelector(".task__main");
-        taskTextNew.innerText = localStorage.getItem(i);
-        tasksAll.innerHTML = parseInt(tasksAll.innerHTML) + 1;
-      }
+  var tasks = localStorage.getItem("tasks");
+  console.log(tasks.length);
+  var ofStorage = localStorage.getItem(1);
+  if (typeof ofStorage !== 'undefined' && ofStorage !== null) { 
+    for (var i = 0; i < tasks.length; i++) { 
+      var newElement = task.cloneNode(true);
+      newElement.addEventListener("click", deleteItem);
+      active.appendChild(newElement);
+      var taskTextNew = newElement.querySelector(".task__main");
+      localStorage.getItem("tasks");
+      countAllTasks();
+      writeCompleteTasks();
     }
-    console.log(tasks);
+  }
 }
 
 // создание нового элемента
