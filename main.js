@@ -29,6 +29,7 @@ function removeTodo(evt) {
   tasks = tasks.filter(function (number) {
     return number.id != idNumber;
   })
+  localStorage.setItem("tasks", tasks);
 }
 
 // вычисление кол-во выполненных заданий
@@ -54,8 +55,8 @@ function getTaskById(id) {
 // загрузка из localStorage 
 function getStorage(evt){
   evt.preventDefault();
-  var tasks = localStorage.getItem("tasks");
-  console.log(tasks.length);
+  var tasksObj = localStorage.getItem("tasks");
+  console.log(tasks);
   var ofStorage = localStorage.getItem(1);
   if (typeof ofStorage !== 'undefined' && ofStorage !== null) { 
     for (var i = 0; i < tasks.length; i++) { 
