@@ -55,11 +55,17 @@ function getTaskById(id) {
 // загрузка из localStorage 
 function getStorage(evt){
   evt.preventDefault();
-  var tasksObj = localStorage.getItem("tasks");
+  var tasks = localStorage.getItem("tasks");
+  //var tasks = localStorage.getItem("tasks");
+  var serial = JSON.stringify(tasks);
+  var serial2 = JSON.parse(serial);
+  serial2 = serial2.split(",");
   console.log(tasks);
-  var ofStorage = localStorage.getItem(1);
-  if (typeof ofStorage !== 'undefined' && ofStorage !== null) { 
-    for (var i = 0; i < tasks.length; i++) { 
+  console.log(serial2);
+  console.log(serial2.length);
+  console.log(typeof(serial2));
+  if (tasks !== 'undefined' && tasks !== null) { 
+    for (var i = 0; i < serial.length; i++) { 
       var newElement = task.cloneNode(true);
       newElement.addEventListener("click", deleteItem);
       active.appendChild(newElement);
