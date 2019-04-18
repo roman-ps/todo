@@ -8,6 +8,7 @@ var tasksAll = document.querySelector(".tasks__all span");
 var tasksComplete = document.querySelector(".tasks__complete span");
 var tasks = [];
 var ActiveTasks;
+var tasksJson;
 
 // определение наибольшего id
 function getId() {
@@ -29,7 +30,8 @@ function removeTodo(evt) {
   tasks = tasks.filter(function (number) {
     return number.id != idNumber;
   })
-  localStorage.setItem("tasks", tasks);
+  tasksJson = JSON.stringify(tasks);
+  localStorage.setItem("tasks", tasksJson);
 }
 
 // вычисление кол-во выполненных заданий
@@ -57,13 +59,9 @@ function getStorage(evt){
   evt.preventDefault();
   var tasks = localStorage.getItem("tasks");
   //var tasks = localStorage.getItem("tasks");
-  var serial = JSON.stringify(tasks);
-  var serial2 = JSON.parse(serial);
-  serial2 = serial2.split(",");
-  console.log(tasks);
-  console.log(serial2);
-  console.log(serial2.length);
-  console.log(typeof(serial2));
+  var serial = JSON.parse(tasks);
+  console.log(serial);
+  console.log(serial.length);
   if (tasks !== 'undefined' && tasks !== null) { 
     for (var i = 0; i < serial.length; i++) { 
       var newElement = task.cloneNode(true);
@@ -88,7 +86,9 @@ function createElem() {
     taskTextNew.innerText = a.todo;
     newElement.setAttribute('id', a.id);
     tasksAll.innerHTML = tasks.length;
-    localStorage.setItem("tasks", tasks);
+    tasksJson = JSON.stringify(tasks);
+    localStorage.setItem("tasks", tasksJson);
+    //localStorage.setItem("tasks", tasks);
   }
   input.value = '';
 }
