@@ -8,7 +8,7 @@ var tasksAll = document.querySelector(".tasks__all span");
 var tasksComplete = document.querySelector(".tasks__complete span");
 var tasks = [];
 var ActiveTasks;
-var tasksJson;
+var tasksJson = [];
 
 // определение наибольшего id
 function getId() {
@@ -58,17 +58,16 @@ function getTaskById(id) {
 function getStorage(evt){
   evt.preventDefault();
   var tasks = localStorage.getItem("tasks");
-  //var tasks = localStorage.getItem("tasks");
-  var serial = JSON.parse(tasks);
-  console.log(serial);
-  console.log(serial.length);
-  if (tasks !== 'undefined' && tasks !== null) { 
-    for (var i = 0; i < serial.length; i++) { 
+  var tasksParse = JSON.parse(tasks);
+  if (tasksParse !== 'undefined' && tasks !== null) { 
+    for (var i = 0; i < tasksParse.length; i++) { 
       var newElement = task.cloneNode(true);
-      newElement.addEventListener("click", deleteItem);
+      newElement.addEventListener("click", handleTaskClick);
       active.appendChild(newElement);
       var taskTextNew = newElement.querySelector(".task__main");
-      localStorage.getItem("tasks");
+      taskTextNew.innerText = tasksParse[i].todo;
+      newElement.setAttribute('id', tasksParse[i].id);
+      tasksAll.innerHTML = tasksParse.length;
       countAllTasks();
       writeCompleteTasks();
     }
@@ -88,7 +87,6 @@ function createElem() {
     tasksAll.innerHTML = tasks.length;
     tasksJson = JSON.stringify(tasks);
     localStorage.setItem("tasks", tasksJson);
-    //localStorage.setItem("tasks", tasks);
   }
   input.value = '';
 }
