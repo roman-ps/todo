@@ -68,7 +68,6 @@ function getStorage(evt){
       taskTextNew.innerText = tasksParse[i].todo;
       newElement.setAttribute('id', tasksParse[i].id);
       tasksAll.innerHTML = tasksParse.length;
-      countAllTasks();
       writeCompleteTasks();
     }
   }
