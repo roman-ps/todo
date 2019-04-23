@@ -54,20 +54,31 @@ function getTaskById(id) {
   return currentTask.pop();
 }
 
+//считаем и выводим кол-во заданий
+function countAllTasks() {
+  tasksAll.innerHTML = tasks.length - getCompleteCount();
+}
+
+//выводим кол-во выполненных заданий
+function writeCompleteTasks() {
+  tasksComplete.innerHTML = getCompleteCount(); 
+}
+
 // загрузка из localStorage 
 function getStorage(evt){
   evt.preventDefault();
-  var tasks = localStorage.getItem("tasks");
-  var tasksParse = JSON.parse(tasks);
-  if (tasksParse !== 'undefined' && tasks !== null) { 
+  var tasksParse = JSON.parse(localStorage.getItem("tasks"));
+  if (tasksParse !== 'undefined' && tasksParse !== null) { 
     for (var i = 0; i < tasksParse.length; i++) { 
       var newElement = task.cloneNode(true);
       newElement.addEventListener("click", handleTaskClick);
       active.appendChild(newElement);
       var taskTextNew = newElement.querySelector(".task__main");
       taskTextNew.innerText = tasksParse[i].todo;
-      newElement.setAttribute('id', tasksParse[i].id);
+      //newElement.setAttribute('id', tasksParse[i].id);
+      //newElement.setAttribute('status', tasksParse[i].status);
       tasksAll.innerHTML = tasksParse.length;
+      console.log(tasksParse.length);
       writeCompleteTasks();
     }
   }
@@ -107,19 +118,11 @@ function handleTaskClick(evt) {
   if (child === parent) {
     thisElement.status = !thisElement.status;
     child.classList.toggle("complete");
+    tasksJson = JSON.stringify(tasks);
+    localStorage.setItem("tasks", tasksJson);
     countAllTasks();
     writeCompleteTasks();
   }
-}
-
-//считаем и выводим кол-во заданий
-function countAllTasks() {
-  tasksAll.innerHTML = tasks.length - getCompleteCount();
-}
-
-//выводим кол-во выполненных заданий
-function writeCompleteTasks() {
-  tasksComplete.innerHTML = getCompleteCount(); 
 }
 
 // удаляем child и parent из handleTaskClick
