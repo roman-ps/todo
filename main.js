@@ -26,12 +26,11 @@ function addTodo() {
 
 // удаление задания по id
 function removeTodo(evt) {
-  var idNumber = evt.currentTarget.getAttribute("id");
+  var idNumber = getTaskId(evt);
   tasks = tasks.filter(function (number) {
     return number.id != idNumber;
   })
-  tasksJson = JSON.stringify(tasks);
-  localStorage.setItem("tasks", tasksJson);
+  toLocalStorage(tasks);
 }
 
 // вычисление кол-во выполненных заданий
@@ -64,10 +63,21 @@ function writeCompleteTasks() {
   tasksComplete.innerHTML = getCompleteCount(); 
 }
 
+//сериализуем и выводим в localStorage
+function toLocalStorage(tasks) {
+  tasksJson = JSON.stringify(tasks);
+  localStorage.setItem("tasks", tasksJson);
+}
+
+//забираем из localStorage
+function fromLocalStorage() {
+  return JSON.parse(localStorage.getItem("tasks"));
+}
+
 // загрузка из localStorage 
 function getStorage(evt){
   evt.preventDefault();
-  var tasksParse = JSON.parse(localStorage.getItem("tasks"));
+  var tasksParse = fromLocalStorage();
   if (tasksParse !== 'undefined' && tasksParse !== null) { 
     for (var i = 0; i < tasksParse.length; i++) { 
       var newElement = task.cloneNode(true);
@@ -95,8 +105,7 @@ function createElem() {
     taskTextNew.innerText = a.todo;
     newElement.setAttribute('id', a.id);
     tasksAll.innerHTML = tasks.length;
-    tasksJson = JSON.stringify(tasks);
-    localStorage.setItem("tasks", tasksJson);
+    toLocalStorage(tasks);
   }
   input.value = '';
 }
@@ -118,8 +127,7 @@ function handleTaskClick(evt) {
   if (child === parent) {
     thisElement.status = !thisElement.status;
     child.classList.toggle("complete");
-    tasksJson = JSON.stringify(tasks);
-    localStorage.setItem("tasks", tasksJson);
+    toLocalStorage(tasks);
     countAllTasks();
     writeCompleteTasks();
   }
