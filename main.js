@@ -11,10 +11,18 @@ var ActiveTasks;
 var tasksJson = [];
 
 // определение наибольшего id
-function getId() {
+/*function getId() {
   return tasks.reduce(function(a,b) {
     return (Math.max(a,b.id) + 1);
   },0);
+}*/
+
+function getId() {
+  if (tasks != null) { 
+    return tasks.reduce(function(a,b) {
+      return (Math.max(a,b.id) + 1);
+    },0);
+  }
 }
 
 // добавление id и текста в задание
@@ -75,22 +83,21 @@ function fromLocalStorage() {
 }
 
 // загрузка из localStorage 
-function getStorage(evt){
+function getFromReboot(evt){
   evt.preventDefault();
-  var tasksParse = fromLocalStorage();
-  if (tasksParse !== 'undefined' && tasksParse !== null) { 
-    for (var i = 0; i < tasksParse.length; i++) { 
+  tasks = fromLocalStorage();
+  if (tasks !== 'undefined' && tasks !== null) { 
+    for (var i = 0; i < tasks.length; i++) { 
       var newElement = task.cloneNode(true);
       newElement.addEventListener("click", handleTaskClick);
       active.appendChild(newElement);
       var taskTextNew = newElement.querySelector(".task__main");
-      taskTextNew.innerText = tasksParse[i].todo;
+      taskTextNew.innerText = tasks[i].todo;
       //newElement.setAttribute('id', tasksParse[i].id);
       //newElement.setAttribute('status', tasksParse[i].status);
-      tasksAll.innerHTML = tasksParse.length;
-      console.log(tasksParse.length);
-      writeCompleteTasks();
     }
+    tasksAll.innerHTML = tasks.length;
+    writeCompleteTasks();
   }
 }
 
@@ -161,4 +168,4 @@ function updCount(evt, number) {
 
 input.addEventListener("dblclick", addsItemByClick);
 input.addEventListener("keydown", addsItemByBtn);
-document.addEventListener("DOMContentLoaded", getStorage);
+document.addEventListener("DOMContentLoaded", getFromReboot);
