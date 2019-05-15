@@ -28,7 +28,9 @@ function getId() {
 // добавление id и текста в задание
 function addTodo() {
   last = {id: getId(), todo: input.value, status: false};
-  tasks.push(last);
+  if (tasks != null) {
+    tasks.push(last);
+  }
   return last;
 }
 
@@ -98,7 +100,7 @@ function getFromReboot(evt){
     }
     tasksAll.innerHTML = tasks.length;
     writeCompleteTasks();
-  }
+  } else tasks = [];
 }
 
 // создание нового элемента
