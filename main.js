@@ -95,12 +95,11 @@ function getFromReboot(evt){
       active.appendChild(newElement);
       var taskTextNew = newElement.querySelector(".task__main");
       taskTextNew.innerText = tasks[i].todo;
-      //newElement.setAttribute('id', tasksParse[i].id);
-      //newElement.setAttribute('status', tasksParse[i].status);
     }
     tasksAll.innerHTML = tasks.length;
     writeCompleteTasks();
   } else tasks = [];
+  console.log(tasks);
 }
 
 // создание нового элемента
@@ -125,6 +124,8 @@ function handleTaskClick(evt) {
   var child = evt.target;
   var parent = evt.currentTarget;
   const thisElement = getTaskById(getTaskId(evt));
+  console.log(thisElement);
+  console.log(thisElement.status);
   if (child != parent) {
     removeEvt(evt);
     if (thisElement.status) {
