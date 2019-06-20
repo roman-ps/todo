@@ -43,13 +43,6 @@ function removeTodo(evt) {
   toLocalStorage(tasks);
 }
 
-// вычисление кол-во выполненных заданий
-function getCompleteCount(evt) {
-  return tasks.reduce(function (a, name) {
-    return a + +(name.status > 0); 
-  },0)
-}
-
 // определяем id элемента
 function getTaskId(evt) {
   return evt.currentTarget.getAttribute("id");
@@ -71,6 +64,13 @@ function countAllTasks() {
 //выводим кол-во выполненных заданий
 function writeCompleteTasks() {
   tasksComplete.innerHTML = getCompleteCount(); 
+}
+
+// вычисление кол-во выполненных заданий
+function getCompleteCount(evt) {
+  return tasks.reduce(function (a, name) {
+    return a + +(name.status > 0); 
+  },0)
 }
 
 //сериализуем и выводим в localStorage
@@ -95,10 +95,16 @@ function getFromReboot(evt){
       active.appendChild(newElement);
       var taskTextNew = newElement.querySelector(".task__main");
       taskTextNew.innerText = tasks[i].todo;
+      console.log(tasks[i].status);
+      console.log(newElement);
+      if (tasks[i].status === "true") {
+      console.log(newElement);
+        newElement.classList.add("complete"); 
+      }
     }
-    tasksAll.innerHTML = tasks.length;
-    writeCompleteTasks();
   } else tasks = [];
+    writeCompleteTasks();
+    countAllTasks();
   console.log(tasks);
 }
 
@@ -124,8 +130,8 @@ function handleTaskClick(evt) {
   var child = evt.target;
   var parent = evt.currentTarget;
   const thisElement = getTaskById(getTaskId(evt));
-  console.log(thisElement);
-  console.log(thisElement.status);
+  //console.log(thisElement);
+  //console.log(thisElement.status);
   if (child != parent) {
     removeEvt(evt);
     if (thisElement.status) {
