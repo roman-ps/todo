@@ -11,12 +11,6 @@ var ActiveTasks;
 var tasksJson = [];
 
 // определение наибольшего id
-/*function getId() {
-  return tasks.reduce(function(a,b) {
-    return (Math.max(a,b.id) + 1);
-  },0);
-}*/
-
 function getId() {
   if (tasks != null) { 
     return tasks.reduce(function(a,b) {
@@ -95,6 +89,7 @@ function getFromReboot(evt){
       active.appendChild(newElement);
       var taskTextNew = newElement.querySelector(".task__main");
       taskTextNew.innerText = tasks[i].todo;
+      newElement.setAttribute('id', tasks[i].id);
       console.log(tasks[i].status);
       console.log(newElement);
       if (tasks[i].status === true) {
