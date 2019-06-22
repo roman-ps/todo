@@ -97,7 +97,7 @@ function getFromReboot(evt){
       taskTextNew.innerText = tasks[i].todo;
       console.log(tasks[i].status);
       console.log(newElement);
-      if (tasks[i].status === "true") {
+      if (tasks[i].status === true) {
       console.log(newElement);
         newElement.classList.add("complete"); 
       }
