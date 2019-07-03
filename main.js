@@ -11,7 +11,7 @@ var ActiveTasks;
 var tasksJson = [];
 
 // определение наибольшего id
-function getId() {
+function getNextId() {
   if (tasks != null) { 
     return tasks.reduce(function(a,b) {
       return (Math.max(a,b.id) + 1);
@@ -21,7 +21,7 @@ function getId() {
 
 // добавление id и текста в задание
 function addTodo() {
-  last = {id: getId(), todo: input.value, status: false};
+  last = {id: getNextId(), todo: input.value, status: false};
   if (tasks != null) {
     tasks.push(last);
   }
@@ -30,9 +30,9 @@ function addTodo() {
 
 // удаление задания по id
 function removeTodo(evt) {
-  var idNumber = getTaskId(evt);
+  var id = getTaskId(evt);
   tasks = tasks.filter(function (number) {
-    return number.id != idNumber;
+    return number.id != id;
   })
   toLocalStorage(tasks);
 }
@@ -56,7 +56,7 @@ function countAllTasks() {
 }
 
 //выводим кол-во выполненных заданий
-function writeCompleteTasks() {
+function renderCompleteCount() {
   tasksComplete.innerHTML = getCompleteCount(); 
 }
 
@@ -90,17 +90,13 @@ function getFromReboot(evt){
       var taskTextNew = newElement.querySelector(".task__main");
       taskTextNew.innerText = tasks[i].todo;
       newElement.setAttribute('id', tasks[i].id);
-      console.log(tasks[i].status);
-      console.log(newElement);
       if (tasks[i].status === true) {
-      console.log(newElement);
         newElement.classList.add("complete"); 
       }
     }
   } else tasks = [];
-    writeCompleteTasks();
+    renderCompleteCount();
     countAllTasks();
-  console.log(tasks);
 }
 
 // создание нового элемента
@@ -125,12 +121,10 @@ function handleTaskClick(evt) {
   var child = evt.target;
   var parent = evt.currentTarget;
   const thisElement = getTaskById(getTaskId(evt));
-  //console.log(thisElement);
-  //console.log(thisElement.status);
   if (child != parent) {
     removeEvt(evt);
     if (thisElement.status) {
-      writeCompleteTasks();
+      renderCompleteCount();
     } else {
       countAllTasks();      
     }
@@ -140,7 +134,7 @@ function handleTaskClick(evt) {
     child.classList.toggle("complete");
     toLocalStorage(tasks);
     countAllTasks();
-    writeCompleteTasks();
+    renderCompleteCount();
   }
 }
 
