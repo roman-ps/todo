@@ -12,19 +12,15 @@ var tasksJson = [];
 
 // определение наибольшего id
 function getNextId() {
-  if (tasks != null) { 
     return tasks.reduce(function(a,b) {
       return (Math.max(a,b.id) + 1);
     },0);
-  }
 }
 
 // добавление id и текста в задание
 function addTodo() {
   last = {id: getNextId(), todo: input.value, status: false};
-  if (tasks != null) {
-    tasks.push(last);
-  }
+  tasks.push(last);
   return last;
 }
 
