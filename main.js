@@ -27,7 +27,7 @@ function addTodo() {
 // удаление задания по id
 function removeTodo(evt) {
   let id = getTaskId(evt);
-  tasks = tasks.filter(function (number) {
+  let tasksById = tasks.filter(function (number) {
     return number.id != id;
   })
   toLocalStorage(tasks);
@@ -74,8 +74,8 @@ function fromLocalStorage() {
   return JSON.parse(localStorage.getItem("tasks"));
 }
 
-// загрузка из localStorage 
-function getFromReboot(evt){
+// загрузка при обновлении страницы 
+function fromReloadPage(evt){
   evt.preventDefault();
   tasks = fromLocalStorage();
   if (tasks !== 'undefined' && tasks !== null) { 
@@ -86,7 +86,7 @@ function getFromReboot(evt){
       let taskTextNew = newElement.querySelector(".task__main");
       taskTextNew.innerText = tasks[i].todo;
       newElement.setAttribute('id', tasks[i].id);
-      if (tasks[i].status === true) {
+      if (tasks[i].status) {
         newElement.classList.add("complete"); 
       }
     }
@@ -161,4 +161,4 @@ function updCount(evt, number) {
 
 INPUT.addEventListener("dblclick", addsItemByClick);
 INPUT.addEventListener("keydown", addsItemByBtn);
-document.addEventListener("DOMContentLoaded", getFromReboot);
+document.addEventListener("DOMContentLoaded", fromReloadPage);
