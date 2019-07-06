@@ -27,7 +27,7 @@ function addTodo() {
 // удаление задания по id
 function removeTodo(evt) {
   let id = getTaskId(evt);
-  let tasksById = tasks.filter(function (number) {
+  tasks = tasks.filter(function (number) {
     return number.id != id;
   })
   toLocalStorage(tasks);
