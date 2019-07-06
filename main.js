@@ -1,14 +1,13 @@
 const KEYCODE_ENTER = 13;
-var tmpl = document.querySelector("#tmpl");
-var task = tmpl.content.querySelector(".task");
-var taskText = tmpl.content.querySelector(".task__main");
-var input = document.querySelector(".add");
-var active = document.querySelector(".active");
-var tasksAll = document.querySelector(".tasks__all span");
-var tasksComplete = document.querySelector(".tasks__complete span");
-var tasks = [];
-var ActiveTasks;
-var tasksJson = [];
+const TMPL = document.querySelector("#tmpl");
+const TASK = TMPL.content.querySelector(".task");
+const ACTIVE = document.querySelector(".active");
+const INPUT = document.querySelector(".add");
+const TASKS_ALL = document.querySelector(".tasks__all span");
+const TASKS_COMLETE = document.querySelector(".tasks__complete span");
+let tasks = [];
+let ActiveTasks;
+let tasksJson = [];
 
 // определение наибольшего id
 function getNextId() {
@@ -19,14 +18,14 @@ function getNextId() {
 
 // добавление id и текста в задание
 function addTodo() {
-  last = {id: getNextId(), todo: input.value, status: false};
+  last = {id: getNextId(), todo: INPUT.value, status: false};
   tasks.push(last);
   return last;
 }
 
 // удаление задания по id
 function removeTodo(evt) {
-  var id = getTaskId(evt);
+  let id = getTaskId(evt);
   tasks = tasks.filter(function (number) {
     return number.id != id;
   })
@@ -40,7 +39,7 @@ function getTaskId(evt) {
 
 // возвращаем элемент по id
 function getTaskById(id) {
-  var currentTask = tasks.filter(function (number) {
+  let currentTask = tasks.filter(function (number) {
     return number.id == id;
   })
   return currentTask.pop();
@@ -48,12 +47,12 @@ function getTaskById(id) {
 
 //считаем и выводим кол-во заданий
 function countAllTasks() {
-  tasksAll.innerHTML = tasks.length - getCompleteCount();
+  TASKS_ALL.innerHTML = tasks.length - getCompleteCount();
 }
 
 //выводим кол-во выполненных заданий
 function renderCompleteCount() {
-  tasksComplete.innerHTML = getCompleteCount(); 
+  TASKS_COMLETE.innerHTML = getCompleteCount(); 
 }
 
 // вычисление кол-во выполненных заданий
@@ -79,11 +78,11 @@ function getFromReboot(evt){
   evt.preventDefault();
   tasks = fromLocalStorage();
   if (tasks !== 'undefined' && tasks !== null) { 
-    for (var i = 0; i < tasks.length; i++) { 
-      var newElement = task.cloneNode(true);
+    for (let i = 0; i < tasks.length; i++) { 
+      let newElement = TASK.cloneNode(true);
       newElement.addEventListener("click", handleTaskClick);
-      active.appendChild(newElement);
-      var taskTextNew = newElement.querySelector(".task__main");
+      ACTIVE.appendChild(newElement);
+      let taskTextNew = newElement.querySelector(".task__main");
       taskTextNew.innerText = tasks[i].todo;
       newElement.setAttribute('id', tasks[i].id);
       if (tasks[i].status === true) {
@@ -97,25 +96,25 @@ function getFromReboot(evt){
 
 // создание нового элемента
 function createElem() {
-  if (input.value != '') {
-    var newElement = task.cloneNode(true);
+  if (INPUT.value != '') {
+    let newElement = TASK.cloneNode(true);
     newElement.addEventListener("click", handleTaskClick);
-    active.appendChild(newElement);
-    var taskTextNew = newElement.querySelector(".task__main");
-    const a = addTodo(input.value);
+    ACTIVE.appendChild(newElement);
+    let taskTextNew = newElement.querySelector(".task__main");
+    const a = addTodo(INPUT.value);
     taskTextNew.innerText = a.todo;
     newElement.setAttribute('id', a.id);
-    tasksAll.innerHTML = tasks.length;
+    countAllTasks();
     toLocalStorage(tasks);
   }
-  input.value = '';
+  INPUT.value = '';
 }
 
 // обработка нажатия по задаче
 function handleTaskClick(evt) {
   evt.preventDefault();
-  var child = evt.target;
-  var parent = evt.currentTarget;
+  let child = evt.target;
+  let parent = evt.currentTarget;
   const thisElement = getTaskById(getTaskId(evt));
   if (child != parent) {
     removeEvt(evt);
@@ -160,6 +159,6 @@ function updCount(evt, number) {
   evt.innerHTML = parseInt(evt.innerHTML) + number;
 }
 
-input.addEventListener("dblclick", addsItemByClick);
-input.addEventListener("keydown", addsItemByBtn);
+INPUT.addEventListener("dblclick", addsItemByClick);
+INPUT.addEventListener("keydown", addsItemByBtn);
 document.addEventListener("DOMContentLoaded", getFromReboot);
