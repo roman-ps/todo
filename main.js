@@ -20,6 +20,7 @@ function getNextId() {
 function addTodo() {
   last = {id: getNextId(), todo: INPUT.value, status: false};
   tasks.push(last);
+  toLocalStorage(tasks);
   return last;
 }
 
@@ -105,7 +106,6 @@ function createElem() {
     taskTextNew.innerText = a.todo;
     newElement.setAttribute('id', a.id);
     countAllTasks();
-    toLocalStorage(tasks);
   }
   INPUT.value = '';
 }
