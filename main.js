@@ -40,10 +40,10 @@ function getTaskId(evt) {
 
 // возвращаем элемент по id
 function getTaskById(id) {
-  let currentTask = tasks.filter(function (number) {
+  let currentTask = tasks.find(function (number) {
     return number.id == id;
   })
-  return currentTask.pop();
+  return currentTask;
 }
 
 //считаем и выводим кол-во заданий
